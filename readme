@@ -1,0 +1,21 @@
+Maksym Bondarenko, Victor Hugo Fernandez Arraya, Denis Ecknauer
+EISTI. Cergy, 2016. 
+
+Every file of this project includes:
+
+- Calibration of financial trees (binomial and trinomial)
+
+- Calculation of option prices depending on time and underlying prices change
+
+- Pricing option at time t = 0 and underlying price known
+
+- Creation of random path
+
+- Surfacing the option price dynamics
+
+- Pricing exotic options s.t. Barrier option, Condor option.
+
+- VaR (level x) calculation for every type of the option
+
+- Pricing options using trinomial trees
+
