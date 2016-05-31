@@ -11,12 +11,12 @@ R = Interest_rate_tree(r0,N);
 Initial_price = V(1,1); display(Initial_price);
 
 %% Greeks
-h = 1;
+h = 0.5;
 V1 = price_s0_stochasticrate_EU(N,T,S0+h,K,R,sigma);
 V2 = price_s0_stochasticrate_EU(N,T,S0-h,K,R,sigma);
 V0 = price_s0_stochasticrate_EU(N,T,S0,K,R,sigma);
 DELTA = (V1(1,1)-V2(1,1))/(2*h);
-GAMMA = (V1(1,1)+V2(1,1)+2*V0(1,1))/(h^2);
+GAMMA = (V1(1,1)+V2(1,1)-2*V0(1,1))/(h^2);
 display(DELTA);
 display(GAMMA);
 

@@ -11,12 +11,12 @@ Initial_price = V(1,1);
 display(Initial_price);
 
 %% Greeks
-h = 1;
+h = 0.5;
 V1 = price_s0_fixed_AM(N,T,S0+h,K,r,sigma);
 V2 = price_s0_fixed_AM(N,T,S0-h,K,r,sigma);
 V0 = price_s0_fixed_AM(N,T,S0,K,r,sigma);
 DELTA = (V1(1,1)-V2(1,1))/(2*h);
-GAMMA = (V1(1,1)+V2(1,1)+2*V0(1,1))/(h^2);
+GAMMA = (V1(1,1)+V2(1,1)-2*V0(1,1))/(h^2);
 display(DELTA);
 display(GAMMA);
 
