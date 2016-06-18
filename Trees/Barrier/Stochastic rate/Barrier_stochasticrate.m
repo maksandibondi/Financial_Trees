@@ -12,15 +12,23 @@ R = Interest_rate_tree(r0,N);
 Initial_price = V(1,1);
 display(Initial_price);
 
+
 %% Greeks
+i = 1; step = 0.1;
+for newS0 = S0/2:step:1.5*S0
 h = 0.5;
-V1 = price_s0_stochasticrate_Barrier(N,T,S0+h,K,R,sigma,B1,B2);
-V2 = price_s0_stochasticrate_Barrier(N,T,S0-h,K,R,sigma,B1,B2);
-V0 = price_s0_stochasticrate_Barrier(N,T,S0,K,R,sigma,B1,B2);
-DELTA = (V1(1,1)-V2(1,1))/(2*h);
-GAMMA = (V1(1,1)+V2(1,1)-2*V0(1,1))/(h^2);
-display(DELTA);
-display(GAMMA);
+V1 = price_s0_stochasticrate_Barrier(N,T,newS0+h,K,R,sigma,B1,B2);
+V2 = price_s0_stochasticrate_Barrier(N,T,newS0-h,K,R,sigma,B1,B2);
+V0 = price_s0_stochasticrate_Barrier(N,T,newS0,K,R,sigma,B1,B2);
+DELTA(i) = (V1(1,1)-V2(1,1))/(2*h);
+GAMMA(i) = (V1(1,1)+V2(1,1)-2*V0(1,1))/(h^2);
+i = i+1;
+end;
+display(DELTA(S0/(2*step)+1));
+display(GAMMA(S0/(2*step)+1));
+figure; plot(S0/2:step:1.5*S0,DELTA); xlabel('variable S0'); ylabel('variable DELTA'); title('DELTA');
+figure; plot(S0/2:step:1.5*S0,GAMMA); xlabel('variable S0'); ylabel('variable GAMMA'); title('GAMMA');
+
 
 %% Checking final condition at t = T and dependence S of V at t = 0
 S01 = 0:1:20;
@@ -28,9 +36,8 @@ for i = 1:size(S01,2);
     [V1,S1,u1,d1] = price_s0_stochasticrate_Barrier(N,T,S01(i),K,R,sigma,B1,B2);
     Initial_price1(i) = V1(1,1);
 end;
-plot(S01,Initial_price1); hold on;
+figure; plot(S01,Initial_price1); hold on;
 plot(S(N+1,:),V(N+1,:)); xlabel('variable S'); ylabel('variable V');
-
 
 
 
