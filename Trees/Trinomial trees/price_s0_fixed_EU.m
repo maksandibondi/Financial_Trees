@@ -6,14 +6,18 @@ sigma_hat = 0.3;
 %% Calibration
 d = 1+r*delta_t-sigma_hat*sqrt(delta_t);
 u = ((1+r*delta_t)^2)/d;
-for n = N+1:-1:1
-    for i = 1:1:2*n+1
-        S(n,i) = S0*(u^((i-1)/2))*(d^(n-1-(i-1)/2));
-        sigma(n,i) = min(sigma_hat, sigma0/sqrt(S(n,i)));
-        p(n,i) = (sigma(n,i)^2)*delta_t/((u-d)*(1-r*delta_t-1));
-        q(n,i) = (sigma(n,i)^2)*delta_t/((u-d)*(1+r*delta_t-d));
-    end;
+
+for n = N:-1:1
+        for i = 1:1:2*n+1
+            S(n,i) = S0*(u^((i-1)/2))*(d^(n-(i-1)/2));
+        	sigma(n,i) = min(sigma_hat, sigma0/sqrt(S(n,i)));
+            p(n,i) = (sigma(n,i)^2)*delta_t/((u-d)*(u-r*delta_t-1));
+            q(n,i) = (sigma(n,i)^2)*delta_t/((u-d)*(1+r*delta_t-d));
+        end;    
 end;
+temp = [S0 zeros(1,2*N)];
+S = [temp; S];
+
 
 %% Final condition
 for i = 1:2*(N+1)+1
