@@ -9,6 +9,7 @@ K = 10; S0 = 10; r = 0.3; sigma = 0.4;
 [V,S,u,d] = price_s0_fixed_EU(N,T,S0,K,r,sigma);
 Initial_price = V(1,1);
 display(Initial_price);
+display(S); display(V);
 
 %% Greeks
 i = 1; step = 0.1;
@@ -32,9 +33,8 @@ for i = 1:size(S01,2);
     [V1,S1,u1,d1] = price_s0_fixed_EU(N,T,S01(i),K,r,sigma);
     Initial_price1(i) = V1(1,1);
 end;
-figure; plot(S01,Initial_price1); hold on;
+figure; plot(S01,Initial_price1,'black'); hold on;
 plot(S(N+1,:),V(N+1,:)); xlabel('variable S'); ylabel('variable V'); 
-
 
 
 %% Plotting
@@ -79,5 +79,23 @@ plot(ddf/10+T,S0-path(1,1):0.1:S0+2*path(1,1),'Marker','o','LineWidth',0.2); % p
 % legend('share price tree','random path','S0-VaR at the level asked','pdf','ddf');
 
 %% Surface
+
 figure;
-surf(S(N+1,:),vector_t,V); xlabel('variable S'); ylabel('variable t'); zlabel('variable V');
+S_new(1) = 0; 
+for k = 2:N+1
+    S_new(k) = S_new(k-1)+S0*3/N;
+end;
+
+for i = 1:N+1
+    for k = 1:N+1
+        [V,S,u,d] = price_s0_fixed_EU(N,T-vector_t(i),S_new(k),K,r,sigma);
+        V_new(i,k) = V(1,1);
+        k = k+1;
+    end;
+i = i+1;
+end;
+
+surf(vector_t,S_new,V_new);
+    
+    
+

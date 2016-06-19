@@ -1,5 +1,5 @@
 clear; clc;
-N = 15; T = 0.5;
+N = 25; T = 0.5;
 delta_t = T/N;
 vector_t = 0:delta_t:T;
 
@@ -94,5 +94,21 @@ plot(ddf/10+T,S0-path(1,1):0.1:S0+2*path(1,1),'Marker','o','LineWidth',0.2); % p
 % legend('share price tree','random path','S0-VaR at the level asked','pdf','ddf');
 
 %% Surface
+
 figure;
-surf(S(N+1,:),vector_t,V); xlabel('variable S'); ylabel('variable t'); zlabel('variable V');
+S_new(1) = 0; 
+for k = 2:N+1
+    S_new(k) = S_new(k-1)+S0*3/N;
+end;
+
+for i = 1:N+1
+    for k = 1:N+1
+        [V,S,u,d] = price_s0_fixed_EU(N,T-vector_t(i),S_new(k),K,r,sigma0);
+        V_new(i,k) = V(1,1);
+        k = k+1;
+    end;
+i = i+1;
+end;
+
+surf(vector_t,S_new,V_new);
+    

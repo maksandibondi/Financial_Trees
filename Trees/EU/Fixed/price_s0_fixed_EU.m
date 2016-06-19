@@ -15,8 +15,8 @@ p = 0.5;
 %% Final condition
 for i = 1:N+1
     S(N+1,i) = S0*(u^(i-1))*(d^(N+1-i)); % Share price law
-    % V(N+1,i) = max(S(N+1,i)-K,0); % Pay-off function call
-    V(N+1,i) = max(K-S(N+1,i),0); % pay-off function put
+    V(N+1,i) = max(S(N+1,i)-K,0); % Pay-off function call
+    % V(N+1,i) = max(K-S(N+1,i),0); % pay-off function put
 end;
 
 %% Tree filling

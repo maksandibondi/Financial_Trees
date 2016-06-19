@@ -70,5 +70,20 @@ plot(vector_t(1:end-1),path(m,:));
 end;
 
 %% Surface
+
 figure;
-surf(S(N+1,:),vector_t,V); xlabel('variable S'); ylabel('variable t'); zlabel('variable V');
+S_new(1) = 0; 
+for k = 2:N+1
+    S_new(k) = S_new(k-1)+S0*3/N;
+end;
+
+for i = 1:N+1
+    for k = 1:N+1
+        [V,S,u,d] = price_s0_fixed_Condor(N,T-vector_t(i),S_new(k),K,r,sigma);
+        V_new(i,k) = V(1,1);
+        k = k+1;
+    end;
+i = i+1;
+end;
+
+surf(vector_t,S_new,V_new);
