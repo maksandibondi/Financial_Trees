@@ -49,7 +49,7 @@ for n = 1:N
 end;
 
 %% Random Path creation and plotting over share price tree
-num_of_iter  = 50;
+num_of_iter = 4000;
 for q = 1:num_of_iter
 random = rand(N,1);    
 path(q,1) = S0;
@@ -61,14 +61,22 @@ for n = 2:N
     else
         path(q,n) = d*path(q,n-1);
     end;
-    
+  
 end;
 
 end;
 hold on
-for m = 1:50
+for m = 1:num_of_iter
 plot(vector_t(1:end-1),path(m,:));
 end;
+
+%% VaR calculation and plotting
+[VaR, pdf, ddf] = VaR(path,num_of_iter,0.95);
+display(VaR);
+plot(vector_t(1:end-1),(S0-VaR)*ones(size(vector_t,2)-1),'black'); % Line of share price dropdown maximum
+plot(pdf/10+1.1*T,S0-path(1,1):0.1:S0+2*path(1,1),'LineWidth',0.4); % plotting pdf values on x-axis against share price on y-axis, normalized
+plot(ddf/10+T,S0-path(1,1):0.1:S0+2*path(1,1),'Marker','o','LineWidth',0.2); % plotting ddf values on x-axis against share price on y-axis, normalized
+% legend('share price tree','random path','S0-VaR at the level asked','pdf','ddf');
 
 %% Surface
 figure;

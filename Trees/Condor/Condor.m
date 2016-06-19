@@ -65,7 +65,7 @@ end;
 
 end;
 hold on
-for m = 1:50
+for m = 1:num_of_iter
 plot(vector_t(1:end-1),path(m,:));
 end;
 

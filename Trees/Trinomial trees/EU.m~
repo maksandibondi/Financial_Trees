@@ -6,7 +6,7 @@ vector_t = 0:delta_t:T;
 K = 10; S0 = 10; r = 0.3; sigma0 = 0.4; sigmahat = 0.3;
 
 %% Main program
-[V,S,u,d] = price_s0_fixed_EU(N,T,S0,K,r,sigma0);
+[V,S,u,d,p_,q_,sigma_] = price_s0_fixed_EU(N,T,S0,K,r,sigma0);
 Initial_price = V(1,1);
 display(Initial_price);
 
@@ -57,26 +57,33 @@ path(q,1) = S0;
 
 for n = 2:N
     
-    if random(n) >= 2/3
-        path(q,n) = u*path(q,n-1);
-    elseif random(n) < 2/3 && random(n) >= 1/3
-        path(q,n) = path(q,n-1);
-    elseif random(n) < 1/3
-        path(q,n) = d*path(q,n-1);
-    end;
+   Sigma(n) = min(sigmahat,sigma0/sqrt(path(n-1)));
+   P(n) = Sigma(n)^2*delta_t/((u-d)*(u-1-r*delta_t));
+   Q(n) = Sigma(n)^2*delta_t/((u-d)*(1+r*delta_t-d));
+       if random(n) < P(n) 
+           path(n) = path(n-1)*u;
+       else
+           if random(n) < Q(n)
+              path(n) = path(n-1)*d;
+           else
+              path(n)=path(n-1)*u^(1/2)*d^(1/2);
+           end;
+       end;
+%       if random(n) < p_(n)
+%         path(q,n) = u*path(q,n-1);
+%       elseif random(n) < q_(n)
+%         path(q,n) = d*path(q,n-1);
+%       else
+%         path(q,n) = path(q,n-1)*(u^(1/2))*(d^(1/2));
+%       end;
     
-%    Sigma(n) = min(sigmahat,sigma0/sqrt(path(n-1)));
-%    P(n) = Sigma(n)^2*delta_t/((u-d)*(u-1-r*delta_t));
-%    Q(n) = Sigma(n)^2*delta_t/((u-d)*(1+r*delta_t-d));
-%    
-%    if random(n) < P(n) 
-%         path(n) = path(n-1)*u;
-%    elseif random(n) < Q(n)
-%         path(n) = path(n-1)*d;
-%    else
-%         path(n)=path(n-1)*u^(1/2)*d^(1/2);
-%    end;
-       
+%     if random(n) >= 2/3
+%         path(q,n) = u*path(q,n-1);
+%     elseif random(n) < 2/3 && random(n) >= 1/3
+%         path(q,n) = path(q,n-1);
+%     elseif random(n) < 1/3
+%         path(q,n) = d*path(q,n-1);
+%     end;
 end;
     
 end;
