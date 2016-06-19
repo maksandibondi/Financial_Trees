@@ -11,9 +11,9 @@ Initial_price = V(1,1);
 display(Initial_price);
 
 %% Greeks
-i = 1; step = 0.1;
+i = 1; step = 1;
 for newS0 = S0/2:step:1.5*S0
-h = 0.5;
+h = 1.3;
 V1 = price_s0_fixed_EU(N,T,newS0+h,K,r,sigma);
 V2 = price_s0_fixed_EU(N,T,newS0-h,K,r,sigma);
 V0 = price_s0_fixed_EU(N,T,newS0,K,r,sigma);

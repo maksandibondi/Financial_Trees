@@ -13,7 +13,7 @@ display(Initial_price);
 %% Greeks
 i = 1; step = 0.1;
 for newS0 = S0/2:step:1.5*S0
-h = 0.5;
+h = 2.5;
 V1 = price_s0_fixed_EU(N,T,newS0+h,K,r,sigma0);
 V2 = price_s0_fixed_EU(N,T,newS0-h,K,r,sigma0);
 V0 = price_s0_fixed_EU(N,T,newS0,K,r,sigma0);
@@ -34,7 +34,6 @@ for i = 1:size(S01,2);
 end;
 figure; plot(S01,Initial_price1); hold on;
 plot(S(N+1,:),V(N+1,:)); xlabel('variable S'); ylabel('variable V');
-
 
 
 
