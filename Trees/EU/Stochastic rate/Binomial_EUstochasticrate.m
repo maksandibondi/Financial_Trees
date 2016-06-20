@@ -33,7 +33,7 @@ for i = 1:size(S01,2);
     Initial_price1(i) = V1(1,1);
 end;
 figure; plot(S01,Initial_price1); hold on;
-plot(S(N+1,:),V(N+1,:)); xlabel('variable S'); ylabel('variable V');
+plot(S(N+1,:),V(N+1,:)); xlabel('variable S'); ylabel('variable V'); legend('initial price', 'final condition');
 
 
 
@@ -44,7 +44,7 @@ plot(S(N+1,:),V(N+1,:)); xlabel('variable S'); ylabel('variable V');
 figure; 
 for n = 1:N
     for i = 1:n
-        scatter(vector_t(n),S(n,i)); xlabel('variable t'); ylabel('variable S');
+        scatter(vector_t(n),S(n,i)); xlabel('variable t'); ylabel('variable S'); title('share price tree');
         hold on;
     end;
 end;
@@ -75,7 +75,7 @@ end;
 figure; 
 for n = 1:N
     for i = 1:n
-        scatter(vector_t(n),R(n,i)); xlabel('variable t'); ylabel('variable R');
+        scatter(vector_t(n),R(n,i)); xlabel('variable t'); ylabel('variable R'); title ('interest rate tree');
         hold on;
     end;
 end;
@@ -97,4 +97,4 @@ for i = 1:N+1
 i = i+1;
 end;
 
-surf(vector_t,S_new,V_new);
+surf(vector_t,S_new,V_new); title('price surface'); xlabel('t'); ylabel('S'); zlabel('V');

@@ -18,7 +18,7 @@ for i = 1:size(T1,2);
     bond_fixe_price(i) = exp(-r0*T1(i));
 end;
 figure; plot(T1,bond_price1,'black'); hold on;
-plot(T1,bond_fixe_price,'red'); title('bond price curve'); xlabel('T'); ylabel('price');
+plot(T1,bond_fixe_price,'red'); title('bond price curve'); xlabel('T'); ylabel('price'); legend('price with stochastic rate', 'price with fixed rate');
 
 %% Plotting
 
