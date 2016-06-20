@@ -3,8 +3,8 @@ function [VaR, pdf, ddf] = VaR(path,num_of_iter,level)
 
 % Profit/Loss variable is calculated as path(n,end)-path(1,1) that means
 % difference between end and start price of the asset
-
-pl_set = -path(1,1):0.1:2*path(1,1); % profit/loss variable scope
+step = 0.1;
+pl_set = -path(1,1):step:2*path(1,1); % profit/loss variable scope
 indic = 0; % indicator if VaR is already found
 for i = 1:size(pl_set,2);
     counter_freq = 0;
@@ -27,9 +27,6 @@ for i = 1:size(pl_set,2);
             counter_freq = num_of_iter;
         
         end;
-        
-        k = k+1;
-        
         
     end; 
     

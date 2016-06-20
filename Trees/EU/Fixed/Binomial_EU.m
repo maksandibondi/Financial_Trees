@@ -1,5 +1,5 @@
 clear; clc;
-N = 15; T = 0.5;
+N = 20; T = 0.5;
 delta_t = T/N;
 vector_t = 0:delta_t:T;
 
@@ -9,7 +9,6 @@ K = 10; S0 = 10; r = 0.3; sigma = 0.4;
 [V,S,u,d] = price_s0_fixed_EU(N,T,S0,K,r,sigma);
 Initial_price = V(1,1);
 display(Initial_price);
-display(S); display(V);
 
 %% Greeks
 i = 1; step = 0.1;
@@ -42,6 +41,10 @@ plot(S(N+1,:),V(N+1,:)); xlabel('variable S'); ylabel('variable V'); legend('ini
 %% Share price tree
 figure; 
 for n = 1:N
+    if S(n,i)==0 
+       S(n,i)=S(n,n); 
+    end;
+         
     for i = 1:n
         scatter(vector_t(n),S(n,i)); xlabel('variable t'); ylabel('variable S'); title('share price tree');
         hold on;
@@ -77,6 +80,8 @@ plot(vector_t(1:end-1),(S0-VaR)*ones(size(vector_t,2)-1),'black'); % Line of sha
 plot(pdf/10+1.1*T,S0-path(1,1):0.1:S0+2*path(1,1),'LineWidth',0.4); % plotting pdf values on x-axis against share price on y-axis, normalized
 plot(ddf/10+T,S0-path(1,1):0.1:S0+2*path(1,1),'Marker','o','LineWidth',0.2); % plotting ddf values on x-axis against share price on y-axis, normalized
 % legend('share price tree','random path','S0-VaR at the level asked','pdf','ddf');
+figure; plot(-path(1,1):step:2*path(1,1),pdf,'black'); hold on;
+plot(-path(1,1):step:2*path(1,1),ddf,'LineWidth',0.2); title('VaR'); xlabel('P/L'); ylabel('pdf/ddf');
 
 %% Surface
 

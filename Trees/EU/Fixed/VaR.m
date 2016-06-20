@@ -28,9 +28,6 @@ for i = 1:size(pl_set,2);
         
         end;
         
-        k = k+1;
-        
-        
     end; 
     
     pdf(i) = counter_freq/num_of_iter;

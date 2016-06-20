@@ -41,7 +41,6 @@ plot(S(N+1,:),V(N+1,:)); xlabel('variable S'); ylabel('variable V'); legend('ini
 
 
 
-
 %% Plotting
 
 %% Share price tree
